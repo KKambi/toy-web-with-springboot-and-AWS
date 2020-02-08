@@ -67,7 +67,7 @@ public class PostsApiControllerTest {
     @Test
     public void Posts_수정된다() throws Exception {
         //given
-        //1. Post entity를 repository(dao)를 통해 생성한다
+        //1. Post 객체를 repository(dao)를 통해 생성한다
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")
