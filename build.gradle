@@ -30,6 +30,6 @@ dependencies {
     compile('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('com.h2database:h2')
-    complile('org.springframework.boot:spring-boot-starter-mustache')
+    compile('org.springframework.boot:spring-boot-starter-mustache')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
