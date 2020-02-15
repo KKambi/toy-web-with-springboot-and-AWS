@@ -1,20 +1,24 @@
-let index = {
+import { $ } from '../module/dom-module.js';
+
+const postsUpdate = {
     init: function(){
         const _this = this;
-        const btnSave = document.getElementById("btn-save");
-        btnSave.addEventListener("click", () => {
-            _this.save();
+
+        const btnUpdate = $("btn-update")
+        btnUpdate.addEventListener("click", () => {
+            _this.update();
         })
     },
-    save : () => {
+    update : () => {
         const data = {
-            title: document.getElementById("title").value,
-            author: document.getElementById("author").value,
-            content: document.getElementById("content").value,
+            title: $("title").value,
+            content: $("content").value,
         }
 
-        fetch("/api/v1/posts", {
-            method: "POST",
+        const id = $("id").value;
+
+        fetch(`/api/v1/posts/${id}`, {
+            method: "PUT",
             body: JSON.stringify(data),
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -24,7 +28,7 @@ let index = {
             return res.json();
         })
         .then((json) => {
-            alert("글이 등록되었습니다.");
+            alert("글이 수정되었습니다.");
             window.location.href = "/";
         })
         .catch((err) => {
@@ -33,4 +37,4 @@ let index = {
     }
 }
 
-index.init();
+postsUpdate.init();
