@@ -12,9 +12,29 @@ cache:
     - '$HOME/.m2/repository/'
     - '$HOME/.gradle/'
 
+
+# Travis CI 빌드
 script: "./gradlew clean build"
 
-# CI 실행 오료 시 메일로 알람
+# Travis CI 빌드로 생성된 Jar 파일을 S3에 업로드
+before_deploy:
+  - zip -r freelec-springboot2-webservice *
+  - mkdir -p deploy
+  - mv freelec-springboot2-webservice.zip deploy/freelec-springboot2-webservice.zip
+
+# 외부 서비스와 연동되는 행위
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: s3-freelec-springboot-build
+    region: ap-northeast-2
+    skip_cleanup: false true
+    acl: private  # 파일 접근 권한
+    local_dir: deploy   # before_deploy에서 생성한 디렉토리
+    wait-until-deployed: true
+
+# CI 실행 완료 시 메일로 알람
 notifications:
   email:
     recipients:
