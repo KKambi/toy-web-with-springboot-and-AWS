@@ -16,7 +16,7 @@ cache:
 # Travis CI 빌드
 script: "./gradlew clean build"
 
-# Travis CI 빌드로 생성된 Jar 파일을 S3에 업로드
+# S3에 전송하기 위해, jar 파일을 압축하여 zip 파일 만들기
 before_deploy:
   - zip -r freelec-springboot2-webservice *
   - mkdir -p deploy
@@ -24,14 +24,25 @@ before_deploy:
 
 # 외부 서비스와 연동되는 행위
 deploy:
-  - provider: s3
+  - provider: s3   # s3에 jar 파일을 압축한 zip 파일을 전송
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: s3-freelec-springboot-build
     region: ap-northeast-2
     skip_cleanup: true
     acl: private  # 파일 접근 권한
-    local_dir: deploy   # before_deploy에서 생성한 디렉토리
+    local_dir: deploy   # before_deploy 에서 생성한 디렉토리, 해당 디렉토리 내 파일만을 전송
+    wait-until-deployed: true
+
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: s3-freelec-springboot-build
+    key: freelec-springboot2-webservice.zip   # 전달받을 빌드 파일
+    bundle_type: zip    # 압축 확장자
+    application: freelec-springboot2-webservice
+    deployment_group: freelec-springboot2-webservice-group
+    region: ap-northeast-2
     wait-until-deployed: true
 
 # CI 실행 완료 시 메일로 알람
