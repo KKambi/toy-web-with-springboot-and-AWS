@@ -20,6 +20,6 @@
 - 무중단배포 (Nginx)
 
 ## 실습 시 겪었던 문제점
-- [블로그 링크](https://kkambi.tistory.com/category/Web/%EC%B1%851-boot%20%26%20AWS)
+- [블로그 링크](https://kkambi.tistory.com/category/Web/%EA%B0%95%EC%9D%98_%EC%9D%B4%EB%8F%99%EC%9A%B1)
 - 해당 블로그에 실습하면서 겪었던 오류 해결 과정을 작성하였습니다.
 - [이동욱님의 깃허브](https://github.com/jojoldu/freelec-springboot2-webservice/issues)에서 다른 이슈들을 검색할 수 있습니다.
